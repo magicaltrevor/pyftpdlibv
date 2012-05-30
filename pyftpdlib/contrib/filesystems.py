@@ -31,6 +31,8 @@
 #  ======================================================================
 
 from pyftpdlib.ftpserver import AbstractedFS
+from fs.memoryfs import MemoryFS
+from fs.s3fs import S3FS
 
 __all__ = ['UnixFilesystem']
 
@@ -58,3 +60,91 @@ class UnixFilesystem(AbstractedFS):
         # validpath was used to check symlinks escaping user home
         # directory; this is no longer necessary.
         return True
+    
+class VirtualFilesystem(AbstractedFS):
+    """Represents a virtual filesystem (currently only memory and s3 are supported)
+    """
+    
+    def __init__(self, root, cmd_channel, type, s3_bucket=None, aws_access_key=None, aws_secret_key=None, seperator='/', thread_synchronize=True, key_sync_timeout=1):
+        AbstractedFS.__init__(self, root, cmd_channel)
+        self.cwd = root
+        self.type = type
+        self.s3_bucket = s3_bucket
+        self.aws_access_key = aws_access_key
+        self.aws_secret_key = aws_secret_key
+        self.seperator = seperator
+        self.thread_synchronize = thread_synchronize
+        self.key_sync_timeout = key_sync_timeout
+        if self.type == "memory":
+            self.fs_obj = MemoryFS()
+        elif self.type == "s3":
+            self.fs_obj = S3FS(bucket=self.bucket, prefix=self.prefix, aws_access_key=self.aws_access_key, aws_secret_key=self.aws_secret_key, separator=self.seperator, thread_synchronize=self.thread_synchronize, key_sync_timeout=self.key_sync_timeout)
+            
+
+    def ftp2fs(self, ftppath):
+        return self.ftpnorm(ftppath)
+
+    def fs2ftp(self, fspath):
+        return fspath
+
+    def validpath(self, path):
+        # validpath was used to check symlinks escaping user home
+        # directory; this is no longer necessary.
+        return True
+    
+    def open(self, filename, mode):
+            return self.fs_obj.open(filename, mode)
+    
+    def mkdir(self, path):
+        return self.fs_obj.makedir(path)
+        
+    def chdir(self, path):
+        return self.fs_obj.opendir(path)
+    
+    def listdir(self,path):
+        return self.fs_obj.listdir(path)
+    
+    def rmdir(self, path):
+        return self.fs_obj.removedir(path)
+    
+    def remove(self, path):
+        return self.fs_obj.remove(path)
+    
+    def rename(self, src, dst):
+        return self.fs_obj.rename(src, dst)
+    
+    def chmod(self, path, mode):
+        return True
+    
+    def readlink(self, path):
+        return self.ftp2fs(path)
+    
+    def isfile(self, path):
+        return self.fs_obj.isfile(path)
+    
+    def islink(self, path):
+        return False
+    
+    def getsize(self, path):
+        return self.fs_obj.getsize(path)
+    
+    def getmtime(self, path):
+        return self.fs_obj.getinfo(path)['modified_time']
+    
+    def realpath(self, path):
+        return path
+    
+    def lexists(self, path):
+        return self.fs_obj.exists(path)
+    
+    def mkstemp(self, suffix='', prefix='', mode='wb'):
+        from tempfile import _RandomNameSequence as RandomName
+        name = RandomName()
+        if suffix != '':
+            suffix = 'tmp'
+        fname = suffix + name.next()
+        return self.fs_obj.open(fname,mode)
+        
+        
+    
+    
