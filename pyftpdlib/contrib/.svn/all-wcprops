@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/1049/trunk/pyftpdlib/contrib
+END
+authorizers.py
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/1046/trunk/pyftpdlib/contrib/authorizers.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/977/trunk/pyftpdlib/contrib/__init__.py
+END
+handlers.py
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/1049/trunk/pyftpdlib/contrib/handlers.py
+END
+filesystems.py
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/977/trunk/pyftpdlib/contrib/filesystems.py
+END

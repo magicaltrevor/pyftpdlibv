@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 29
+/svn/!svn/ver/1049/trunk/test
+END
+test_ftpd.py
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/1049/trunk/test/test_ftpd.py
+END
+bench.py
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/1046/trunk/test/bench.py
+END
+test_contrib.py
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/1046/trunk/test/test_contrib.py
+END
+keycert.pem
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/675/trunk/test/keycert.pem
+END
