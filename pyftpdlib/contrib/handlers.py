@@ -479,13 +479,14 @@ class VirtualFS_FTPHandler(FTPHandler):
     """A ftpserver.FTPHandler subclass for passing arguments to the virtual filesystem
     Implements AUTH, PBSZ and PROT commands (RFC-2228 and RFC-4217).
     """
-    type = type
-    s3_bucket = s3_bucket
-    aws_access_key = aws_access_key
-    aws_secret_key = aws_secret_key
-    seperator = seperator
-    thread_synchronize = thread_synchronize
-    key_sync_timeout = key_sync_timeout
+    type = None
+    s3_bucket = None
+    aws_access_key = None
+    aws_secret_key = None
+    seperator = '/'
+    thread_synchronize = True
+    key_sync_timeout = 1
+    fs_obj = None
         
     def __init__(self, conn, server):
         super(VirtualFS_FTPHandler, self).__init__(conn, server)

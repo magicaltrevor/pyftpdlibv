@@ -75,10 +75,14 @@ class VirtualFilesystem(AbstractedFS):
         self.seperator = cmd_channel.seperator
         self.thread_synchronize = cmd_channel.thread_synchronize
         self.key_sync_timeout = cmd_channel.key_sync_timeout
-        if self.type == "memory":
-            self.fs_obj = MemoryFS()
-        elif self.type == "s3":
-            self.fs_obj = S3FS(bucket=self.bucket, prefix=self.prefix, aws_access_key=self.aws_access_key, aws_secret_key=self.aws_secret_key, separator=self.seperator, thread_synchronize=self.thread_synchronize, key_sync_timeout=self.key_sync_timeout)
+        if not self.cmd_channel.fs_obj:
+            if self.type == "memory":
+                self.fs_obj = MemoryFS()
+            elif self.type == "s3":
+                self.fs_obj = S3FS(bucket=self.bucket, prefix=self.prefix, aws_access_key=self.aws_access_key, aws_secret_key=self.aws_secret_key, separator=self.seperator, thread_synchronize=self.thread_synchronize, key_sync_timeout=self.key_sync_timeout)
+            self.cmd_channel.fs_obj = self.fs_obj
+        else:
+            self.fs_obj = self.cmd_channel.fs_obj
             
 
     def ftp2fs(self, ftppath):
