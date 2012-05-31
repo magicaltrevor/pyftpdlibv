@@ -489,6 +489,6 @@ class VirtualFS_FTPHandler(FTPHandler):
     fs_obj = None
         
     def __init__(self, conn, server):
-        super(VirtualFS_FTPHandler, self).__init__(conn, server)
+        FTPHandler.__init__(self, conn, server)
         if not self.connected:
             return
