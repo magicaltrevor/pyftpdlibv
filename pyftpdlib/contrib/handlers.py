@@ -492,3 +492,11 @@ class VirtualFS_FTPHandler(FTPHandler):
         FTPHandler.__init__(self, conn, server)
         if not self.connected:
             return
+        
+class Curriculog_FTPHandler(VirtualFS_FTPHandler):
+    
+    def on_file_received(self, file):
+        print "Filename is %s" % file.name
+        f = self.fs_obj.open(file)
+        data = f.read()
+        print "Data is %s" % data
