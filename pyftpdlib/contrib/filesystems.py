@@ -97,7 +97,9 @@ class VirtualFilesystem(AbstractedFS):
         return True
     
     def open(self, filename, mode):
-            return self.fs_obj.open(filename, mode)
+            f = self.fs_obj.open(filename, mode)
+            f.name=filename
+            return f
     
     def mkdir(self, path):
         return self.fs_obj.makedir(path)
