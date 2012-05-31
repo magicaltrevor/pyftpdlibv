@@ -65,16 +65,16 @@ class VirtualFilesystem(AbstractedFS):
     """Represents a virtual filesystem (currently only memory and s3 are supported)
     """
     
-    def __init__(self, root, cmd_channel, type, s3_bucket=None, aws_access_key=None, aws_secret_key=None, seperator='/', thread_synchronize=True, key_sync_timeout=1):
+    def __init__(self, root, cmd_channel):
         AbstractedFS.__init__(self, root, cmd_channel)
-        self.cwd = root
-        self.type = type
-        self.s3_bucket = s3_bucket
-        self.aws_access_key = aws_access_key
-        self.aws_secret_key = aws_secret_key
-        self.seperator = seperator
-        self.thread_synchronize = thread_synchronize
-        self.key_sync_timeout = key_sync_timeout
+        self.cwd = cmd_channel.root
+        self.type = cmd_channel.type
+        self.s3_bucket = cmd_channel.s3_bucket
+        self.aws_access_key = cmd_channel.aws_access_key
+        self.aws_secret_key = cmd_channel.aws_secret_key
+        self.seperator = cmd_channel.seperator
+        self.thread_synchronize = cmd_channel.thread_synchronize
+        self.key_sync_timeout = cmd_channel.key_sync_timeout
         if self.type == "memory":
             self.fs_obj = MemoryFS()
         elif self.type == "s3":
