@@ -67,7 +67,7 @@ class VirtualFilesystem(AbstractedFS):
     
     def __init__(self, root, cmd_channel):
         AbstractedFS.__init__(self, root, cmd_channel)
-        self.cwd = cmd_channel.root
+        self.cwd = root
         self.type = cmd_channel.type
         self.s3_bucket = cmd_channel.s3_bucket
         self.aws_access_key = cmd_channel.aws_access_key
